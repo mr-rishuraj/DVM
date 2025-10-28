@@ -1044,22 +1044,6 @@ body {
     text-decoration: none;
 }
 
-.footer-icons {
-    display: flex;
-    gap: 15px;
-}
-
-.footer-icons a {
-    color: white;
-    font-size: 18px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.footer-icons a:hover {
-    color: #61bd4f;
-}
-
 @media (max-width: 1024px) {
     .footer {
         padding: 40px 40px 20px;
