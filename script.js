@@ -1,33 +1,45 @@
+
 // IMAGE SWITCHING LOGIC
 const tabs = document.querySelectorAll(".tab");
 const image = document.getElementById("productivity-img");
 
 const images = {
-  inbox:
-    "Inbox.png",
-  boards:
-    "Boards.png",
-  planner:
-    "Planner.png",
+  inbox: "Inbox.png",
+  boards: "Boards.png",
+  planner: "Planner.png",
 };
 
-tabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    // Remove active from all
-    tabs.forEach((t) => t.classList.remove("active"));
+let currentIndex = 0; // to track current tab index
 
-    // Add active to clicked one
+tabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => {
+    if (index === currentIndex) return; // prevent re-click glitch
+
+    // Remove active from all and add to clicked tab
+    tabs.forEach((t) => t.classList.remove("active"));
     tab.classList.add("active");
 
-    // Change image with fade effect
     const target = tab.getAttribute("data-target");
-    image.style.opacity = 0;
+
+    const goingForward = index > currentIndex;
+
+    image.classList.add(goingForward ? "slide-out-left" : "slide-out-right");
+
     setTimeout(() => {
       image.src = images[target];
-      image.style.opacity = 1;
-    }, 300);
+
+      image.classList.remove("slide-out-left", "slide-out-right");
+      image.classList.add("slide-in");
+
+      setTimeout(() => {
+        image.classList.remove("slide-in");
+      }, 450);
+    }, 450);
+
+    currentIndex = index;
   });
 });
+
 
 const slides = document.querySelectorAll(".testimonial-card");
 const dotsContainer = document.querySelector(".dots");
@@ -58,7 +70,6 @@ function showSlide(index) {
 nextBtn.addEventListener("click", () => showSlide(current + 1));
 prevBtn.addEventListener("click", () => showSlide(current - 1));
 
-// Optional auto-slide every 7 seconds
 setInterval(() => showSlide(current + 1), 7000);
 
 const hamburger = document.getElementById("hamburger");
@@ -66,5 +77,7 @@ const navLinks = document.getElementById("nav-links");
 
 hamburger.addEventListener("click", () => {
   navLinks.classList.toggle("active");
-  hamburger.classList.toggle("open");
+  document.body.classList.toggle("menu-open");
+  hamburger.classList.toggle("open"); 
 });
+
